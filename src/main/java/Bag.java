@@ -105,6 +105,7 @@ public abstract class Bag {
         if (numberOfContents == 0)
             return null;
         numberOfContents -= 1;
+        return contents[numberOfContents];
     }
 
 
