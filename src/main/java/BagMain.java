@@ -18,7 +18,7 @@ class BagMain {
         for (Bag b : bags)
         {
             bags.enhance();
-            if (double_enhance_handbags)
+            if (double_enhance_handbags && b instanceof HandBag)
                 bags.enhance();
         }
     }
@@ -36,8 +36,8 @@ class BagMain {
         int c = 0;
         for (Bag b : bags)
         {
-            if (b instanceof CrossbodyBags)
-                c += CrossbodyBags(b).getNumberOfStraps();
+            if (b instanceof CrossbodyBag)
+                c += CrossbodyBag(b).getNumberOfStraps();
         }
         return c;
     }
