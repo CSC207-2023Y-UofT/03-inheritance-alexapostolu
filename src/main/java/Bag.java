@@ -1,78 +1,152 @@
 /*
- * This file is currently empty, but with a variety of TODOs to implement.
- * You may want to refer to HandBag.java to see how to structure your code.
- *
- * You may find the readings in chapter 3. Relationships between Classes
- * helpful while working through this exercise.
+ * This file defines an abstract class named Bag.
+ * In this exercise, you will be writing a larger class according to
+ * the TODOs we have left you. You may find the readings in chapter
+ * 1. Introduction to Java helpful.
  */
 
-/*
- * TODO: Create a public class named CrossbodyBag which is a subclass of Bag
- *       In addition to the attributes in Bag, the CrossbodyBag should have an
- *       attribute named "numberOfStraps".
- *
- *       The constructor for CrossbodyBag should take the following parameters
- *       in order:
- *           1. a String for the color
- *           2. an int for the capacity
- *           3. an int for the number of straps
- *
- *       CrossbodyBag should also have a getter method called getNumberOfStraps
- *       and it should implement the enhance method.
- *
- *       The enhance method should increase the capacity of the CrossbodyBag by
- *       2 (as opposed to the 1 that HandBag increases by).
- *
- *       The toString method should be overridden to return a string in the
- *       in the same form as Bag's toString but with the original "Bag" part
- *       of the string replaced by:
- *           Crossbody Bag with {numberOfStraps} straps
- *
- *       See the tests in test/CrossBodyBagTest.java for examples.
- */
-
-public class CrossbodyBag extends Bag{
-
-	private int numberOfStraps;
-	
-    /**
-     * Creates a new HandBag with the given color and
-     * capacity.
-     *
-     * @param color
-     * @param capacity
+public abstract class Bag {
+    /*
+     * TODO: Create the following private instance variables
+     *       - a String named color
+     *       - an int named numberOfContents
+     *       - an int named capacity
+     *       - an array of Strings named contents
      */
-    CrossbodyBag(String color, int capacity, int num) {
-        /**
-         * This is how we call the parent's constructor
-         * The Python equivalent is super().__init__(...)
-         */
-        super(color, capacity);
-		numberOfStraps = num;
+    private String color;
+    private int numberOfContents;
+    private int capacity;
+    private String[] contents;
+
+
+
+
+    /*
+     * TODO: Create a constructor that takes two arguments:
+     *       - a String representing the Bag's colour
+     *       - an int representing the Bag's capacity
+     *
+     * The other attributes (private instance variables) should
+     * be empty (e.g. numberOfContents is 0 and an empty String array for
+     * its contents.)
+     */
+    Bag(String _color, int _capacity)
+    {
+        color = _color;
+        capacity = _capacity;
+        contents = new String[capacity];
     }
 
-	public int getNumberOfStraps()
-	{
-		return numberOfStraps;
-	}
-	
+
+
+
+    /*
+     * TODO: Create a variety of 'getter' functions.
+     *       These should be named:
+     *           - getColor
+     *           - getNumberOfContents
+     *           - getCapacity
+     */
+    String getColor() { return color; }
+    String[] getNumberOfContents() { return contents.length; }
+    int getCapacity() { return capacity; }
+
+
+
+
+    /*
+     * TODO: Create a setter function called setColor which sets the
+     *       color of this bag to the given color.
+     */
+    void setColor(Color _color) { color = _color; }
+
+
+
+
+
+    /*
+     * TODO: Create a method called addItem that takes in a String
+     *       representing an item in the Bag.
+     *       The item is added into the Bag if the number of items
+     *       in the bag is < the capacity of the Bag.
+     *       Remember to modify numberOfContents accordingly.
+     *
+     *       This method should return true if the item was added
+     *       and false otherwise.
+     */
+    boolean addItem(String _item)
+    {
+        if (numberOfContents < capacity)
+        {
+            contents[numberOfContents] = _item;
+            numberOfContents += 1;
+            return true;
+        }
+        
+        return false;
+    }
+
+
+
+
+
     /**
-     * Increase the capacity of this bag by 1.
+     * TODO: Create a method called popItem that returns a String.
+     *       The string should be the last item added to this Bag
+     *       and the item should be removed from this Bag.
+     *       Remember to modify numberOfContents accordingly.
+     *
+     * If there are no items in this Bag, return null.
+     *
+     * @return
+     */
+    String popItem()
+    {
+        if (numberOfContents == 0)
+            return null;
+        numberOfContents -= 1;
+    }
+
+
+
+
+
+    /**
+     * Increase this bag's capacity by n.
+     *
+     * @param n the amount to increase this Bag's capacity by
+     */
+    public void increaseCapacity(int n) {
+        // TODO: Implement this method.
+        String[] new_arr = new String[capacity + n];
+        capacity += n;
+        for (int i = 0; i < numberOfContents; i += 1)
+            new_arr[i] = contents[i];
+        contents = new_arr;
+    }
+
+    /**
+     * Return the details of this Bag.
+     * This method requires you to have created the private
+     * instance variables mentioned above.
+     *
+     * @return
      */
     @Override
-    public void enhance() {
-        /* TODO: Implement this method.
-         *       You may want to use the increaseCapacity() method that was
-         *       implemented in Bag.
-         *
-         * To call a method defined in a parent, you use super.method_name(...)
-         */
-        super.increaseCapacity(2);
-    }
-
-	 @Override
     public String toString() {
-        return this.color + " Crossbody Bag with " + numberOfStraps + " straps (" + this.numberOfContents + " / " +
+        return this.color + " Bag (" + this.numberOfContents + " / " +
                 this.capacity + ")";
     }
+
+    /*
+     * Below we have defined an abstract method.
+     * This method takes no arguments and does not return anything.
+     * It increases the capacity of this Bag.
+     *
+     * You will need to implement this method in
+     * HandBag.java and CrossbodyBag.java.
+     *
+     * We recommend you look at HandBag.java first.
+     */
+    public abstract void enhance();
 }
